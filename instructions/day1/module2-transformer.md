@@ -108,10 +108,10 @@ flowchart LR
 5. เทียบว่าตำแหน่งไหนตอบถูก
 
 ```bash
-python -c "
+uv run python -c "
 import sys; sys.path.insert(0,'apps/agent-api')
 from agent import tokenizer
-text = open('data/logs/samples/01-cisco-ios-APE-NBI-03.log').read()
+text = open('data/logs/samples/01-cisco-ios-APE-NBI-03.log', encoding='utf-8').read()
 print('tokens:', tokenizer.count(text))
 "
 ```
