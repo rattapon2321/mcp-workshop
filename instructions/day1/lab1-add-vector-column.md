@@ -43,7 +43,7 @@ cmd /c "docker exec -i mpls-neo4j cypher-shell -u neo4j -p neo4j_dev_password < 
 ## ขั้นที่ 2 · เพิ่ม column
 
 ```sql
-ALTER TABLE tickets ADD COLUMN embedding vector(768);
+ALTER TABLE tickets ADD COLUMN embedding vector(1536);
 ```
 
 **ทำไมต้อง 768** — ต้องตรงกับมิติของโมเดล ถ้าใส่ผิด `INSERT` จะ error ทุกแถว
