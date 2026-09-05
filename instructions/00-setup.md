@@ -141,9 +141,22 @@ uv run chainlit run apps/chainlit-ui/app.py --port 8000 -w
 
 | คำสั่ง | ทำอะไร |
 |---|---|
-| `make verify` | ตรวจว่าข้อมูลครบ |
-| `make reseed` | สร้างข้อมูลใหม่ให้ timestamp สดใหม่ |
-| `make api` / `make ui` | รันแอปของตัวเอง |
-| `make test` | ตรวจงานตัวเอง |
-| `make down` | ปิดระบบ (ข้อมูลยังอยู่) |
-| `make reset` | ล้างทุกอย่างเริ่มใหม่ |
+| `docker compose -f docker/docker-compose.yml --env-file .env run --rm seeder python verify.py` | ตรวจว่าข้อมูลครบ |
+| `docker compose -f docker/docker-compose.yml --env-file .env run --rm seeder python seed.py --purge` | สร้างข้อมูลใหม่ให้ timestamp สดใหม่ |
+| `uv run uvicorn apps.agent-api.main:app --reload --port 8080` / `uv run chainlit run apps/chainlit-ui/app.py --port 8000 -w` | รันแอปของตัวเอง |
+| `uv run pytest -v` | ตรวจงานตัวเอง |
+| `docker compose -f docker/docker-compose.yml --env-file .env down` | ปิดระบบ (ข้อมูลยังอยู่) |
+| `docker compose -f docker/docker-compose.yml --env-file .env down -v` | ล้างทุกอย่างเริ่มใหม่ |
+
+## 8. ตารางเปรียบเทียบ Make กับ Windows PowerShell ติดตั้งโดย make install
+
+---
+
+| Make | Windows PowerShell |
+|---|---|
+| `make verify` | docker compose -f docker/docker-compose.yml --env-file .env run --rm seeder python verify.py |
+| `make reseed` | docker compose -f docker/docker-compose.yml --env-file .env run --rm seeder python seed.py --purge |
+| `make api` / `make ui` | uv run uvicorn apps.agent-api.main:app --reload --port 8080 / uv run chainlit run apps/chainlit-ui/app.py --port 8000 -w |
+| `make test` | uv run pytest -v |
+| `make down` | docker compose -f docker/docker-compose.yml --env-file .env down |
+| `make reset` | docker compose -f docker/docker-compose.yml --env-file .env down -v |
