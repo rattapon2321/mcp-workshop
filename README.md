@@ -16,11 +16,11 @@ cp .env.example .env
 ```
 
 ```bash
-make up
+make up : docker compose -f docker/docker-compose.yml --env-file .env up -d 
 ```
 
 ```bash
-make verify
+make verify : docker compose -f docker/docker-compose.yml --env-file .env run --rm seeder python verify.py 
 ```
 
 เปิดใช้งาน:
