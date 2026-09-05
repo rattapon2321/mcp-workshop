@@ -40,19 +40,21 @@ cmd /c "docker exec -i mpls-neo4j cypher-shell -u neo4j -p neo4j_dev_password < 
 
 ---
 
+**ทำไมต้อง 768** — ต้องตรงกับมิติของโมเดล ถ้าใส่ผิด `INSERT` จะ error ทุกแถว
+
+```bash
+$headers = @{
+    "Authorization" = "Bearer sk-or-v1-***Your Key***"
+    "Content-Type" = "application/json"
+}
+$body = '{"model":"openai/text-embedding-3-small","input":["test"]}'
+(Invoke-RestMethod -Uri "https://openrouter.ai/api/v1/embeddings" -Method Post -Headers $headers -Body $body).data[0].embedding.Count
+```
+
 ## ขั้นที่ 2 · เพิ่ม column
 
 ```sql
 ALTER TABLE tickets ADD COLUMN embedding vector(1536);
-```
-
-**ทำไมต้อง 768** — ต้องตรงกับมิติของโมเดล ถ้าใส่ผิด `INSERT` จะ error ทุกแถว
-
-```bash
-curl -s $EMBEDDING_BASE_URL/embeddings \
-  -H 'Content-Type: application/json' \
-  -d '{"model":"embeddinggemma:300m","input":["test"]}' \
-  | python3 -c "import sys,json; print(len(json.load(sys.stdin)['data'][0]['embedding']))"
 ```
 
 ---
