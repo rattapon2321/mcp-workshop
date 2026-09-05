@@ -16,7 +16,7 @@ cp .env.example .env
 ```
 
 ```bash
-docker compose -f docker/docker-compose.yml --env-file .env up -d ต่อด้วย docker compose -f docker/docker-compose.yml --env-file .env up seeder
+docker compose -f docker/docker-compose.yml --env-file .env up -d
 ```
 
 ```bash
