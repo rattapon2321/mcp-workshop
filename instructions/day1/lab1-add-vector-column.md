@@ -187,7 +187,7 @@ print("ตัวอย่างข้อมูลเวกเตอร์ 5 ค�
 CREATE VECTOR INDEX device_embedding IF NOT EXISTS
 FOR (d:Device) ON (d.embedding)
 OPTIONS { indexConfig: {
-  `vector.dimensions`: 768,
+  `vector.dimensions`: 1536,
   `vector.similarity_function`: 'cosine'
 }};
 ```
