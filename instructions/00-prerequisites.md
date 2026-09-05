@@ -30,7 +30,7 @@ git --version
 | เครื่องมือ | หมายเหตุ |
 |---|---|
 | **Python 3.11+** | 3.12 ดีที่สุด |
-| **uv** | `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
+| **uv** | `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"` |
 | **Docker Desktop** | ต้องจัดสรร RAM อย่างน้อย **8 GB** ให้ Docker |
 | **Git** | |
 | **VS Code หรือ Cursor** | วันที่ 3 ใช้ Cursor ทดสอบต่อ MCP |
