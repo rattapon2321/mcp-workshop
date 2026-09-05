@@ -16,11 +16,11 @@ cp .env.example .env
 ```
 
 ```bash
-make up : docker compose -f docker/docker-compose.yml --env-file .env up -d 
+docker compose -f docker/docker-compose.yml --env-file .env up -d ต่อด้วย docker compose -f docker/docker-compose.yml --env-file .env up seeder
 ```
 
 ```bash
-make verify : docker compose -f docker/docker-compose.yml --env-file .env run --rm seeder python verify.py 
+docker compose -f docker/docker-compose.yml --env-file .env run --rm seeder python verify.py 
 ```
 
 เปิดใช้งาน:
@@ -176,14 +176,14 @@ flowchart TD
 
 | คำสั่ง | ทำอะไร |
 |---|---|
-| `make up` | เปิดระบบทั้งหมด + seed อัตโนมัติ |
-| `make verify` | ตรวจว่าข้อมูลครบทั้ง 3 ฐาน |
-| `make reseed` | สร้างข้อมูลใหม่ให้ timestamp สดใหม่ (**ทำเช้าวันเดโม**) |
+| `docker compose -f docker/docker-compose.yml --env-file .env up -d ต่อด้วย docker compose -f docker/docker-compose.yml --env-file .env up seeder` | เปิดระบบทั้งหมด + seed อัตโนมัติ |
+| `docker compose -f docker/docker-compose.yml --env-file .env run --rm seeder python verify.py` | ตรวจว่าข้อมูลครบทั้ง 3 ฐาน |
+| `docker compose -f docker/docker-compose.yml --env-file .env run --rm seeder python seed.py --purge` | สร้างข้อมูลใหม่ให้ timestamp สดใหม่ (**ทำเช้าวันเดโม**) |
 | `make load-logs` | โหลด log จาก `data/logs/incoming/` เข้า OpenSearch |
-| `make api` / `make ui` | รัน Agent API / Chainlit ของผู้เรียน |
-| `make demo` | เปิดแอปสำเร็จรูป (โหมดจริง) |
-| `make demo-offline` | เปิดแอปสำเร็จรูป (โหมด replay ไม่ต้องมี LLM) |
-| `make down` / `make reset` | ปิดระบบ / ล้างข้อมูลทั้งหมด |
+| `uv run uvicorn apps.agent-api.main:app --reload --port 8080` / `uv run chainlit run apps/chainlit-ui/app.py --port 8000 -w` | รัน Agent API / Chainlit ของผู้เรียน |
+| `docker compose -f docker/docker-compose.yml --env-file .env --profile demo up -d mcp-demo` | เปิดแอปสำเร็จรูป (โหมดจริง) |
+| `$env:DEMO_MODE="replay"; docker compose -f docker/docker-compose.yml --env-file .env --profile demo up -d mcp-demo` | เปิดแอปสำเร็จรูป (โหมด replay ไม่ต้องมี LLM) |
+| `docker compose -f docker/docker-compose.yml --env-file .env down` / `docker compose -f docker/docker-compose.yml --env-file .env down -v` | ปิดระบบ / ล้างข้อมูลทั้งหมด |
 
 ---
 
