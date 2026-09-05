@@ -194,11 +194,40 @@ OPTIONS { indexConfig: {
 
 แล้ว backfill `d.profile_text` เข้าไป (ดูตัวอย่างใน `docker/seeder/seed_neo4j.py`)
 
+ลบ Vector ขนาด 768
+
+```cypher
+DROP INDEX device_embedding IF EXISTS;
+```
+
+"สร้างใหม่" ให้รองรับ 1536 มิติ
+
+```cypher
+CREATE VECTOR INDEX device_embedding IF NOT EXISTS
+FOR (d:Device) ON (d.embedding)
+OPTIONS {
+  indexConfig: {
+    `vector.dimensions`: 1536,
+    `vector.similarity_function`: 'cosine'
+  }
+};
+```
+
+รันไฟล์ embed_devices.py
+
+```cypher
+uv run python scripts/embed_devices.py
+```
+
 ค้นหา:
 
 ```cypher
-CALL db.index.vector.queryNodes('device_embedding', 3, $vec)
-YIELD node, score RETURN node.device_id, score
+MATCH (d:Device) 
+WHERE d.embedding IS NOT NULL
+WITH d.embedding AS mock_vec LIMIT 1
+CALL db.index.vector.queryNodes('device_embedding', 3, mock_vec)
+YIELD node, score 
+RETURN node.device_id, score
 ```
 
 ---
