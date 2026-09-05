@@ -40,7 +40,7 @@ cmd /c "docker exec -i mpls-neo4j cypher-shell -u neo4j -p neo4j_dev_password < 
 
 ---
 
-**ทำไมต้อง 768** — ต้องตรงกับมิติของโมเดล ถ้าใส่ผิด `INSERT` จะ error ทุกแถว
+**ทำไมต้อง 1536** — ต้องตรงกับมิติของโมเดล ถ้าใส่ผิด `INSERT` จะ error ทุกแถว
 
 ```bash
 $headers = @{
