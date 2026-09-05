@@ -100,7 +100,7 @@ flowchart LR
 |---|---|---|
 | Main brain | `gemma3:27b` | ใช้ตอนส่งงาน / เดโม |
 | Iteration | `gemma3:4b` | ใช้ระหว่างทำ lab ให้วนแก้เร็ว |
-| Embedding | `embeddinggemma:300m` | 768 มิติ — ตรงกับ production |
+| Embedding | `openai/text-embedding-3-small` | 1536 มิติ — ตรงกับ production |
 | Rerank | `mxbai-rerank` | ลด hallucination |
 
 ทุกตัวคุยผ่าน **OpenAI-compatible protocol** (Ollama หรือ vLLM) → เปลี่ยนโมเดลได้โดยไม่แก้โค้ด
