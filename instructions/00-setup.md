@@ -80,11 +80,21 @@ flowchart LR
 ```sql
 SELECT device_id, site_code, role, model FROM devices ORDER BY site_code, role;
 ```
+**pgAdmin** — มี server Password:
+
+```sql
+mpls_dev_password
+```
 
 **Neo4j Browser** — ดูโครงสร้างที่เป็นหัวใจของโจทย์:
 
 ```cypher
 MATCH p = (l:Device {role:'LPE'})-[:UPLINK_TO]->(a:Device) RETURN p
+```
+**Neo4j Browser** — Password:
+
+```cypher
+neo4j_dev_password
 ```
 
 **OpenSearch Dashboards** — Dev Tools แล้วรัน:
@@ -101,11 +111,11 @@ GET network-logs-*/_search
 เปิด 2 terminal:
 
 ```bash
-make api
+uv run uvicorn apps.agent-api.main:app --reload --port 8080
 ```
 
 ```bash
-make ui
+uv run chainlit run apps/chainlit-ui/app.py --port 8000 -w
 ```
 
 เปิด http://localhost:8000 แล้วลองถาม *"ticket ที่ยังไม่ปิดมีอะไรบ้าง"*
