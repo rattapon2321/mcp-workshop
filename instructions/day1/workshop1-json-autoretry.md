@@ -16,18 +16,67 @@
 
 `ticket_messages` ในระบบเป็นข้อความอิสระที่ลูกค้าและเจ้าหน้าที่พิมพ์กันเอง ไทยปนอังกฤษ ไม่มีโครงสร้าง
 
-ต้องแปลงให้เป็นข้อมูลที่ระบบใช้ต่อได้:
+ต้องแปลงให้เป็นข้อมูลที่ระบบใช้ต่อได้: สร้างไฟล์ `test_parser.py`
 
 ```json
-{
-  "category": "intermittent",
-  "severity": "high",
-  "affected_device": "LPE-NBI-11",
-  "affected_site": "NBI",
-  "summary_th": "ลูกค้าแจ้งเน็ตหลุดเป็นช่วง วันละหลายครั้ง",
-  "customer_impact": "ใช้งาน video conference ไม่ต่อเนื่อง",
-  "confidence": 0.85
-}
+import asyncio
+import sys
+sys.path.insert(0, 'apps/agent-api')
+
+from pydantic import BaseModel, Field
+from agent import llm
+
+# 1. สร้าง Schema กำหนดโครงสร้าง Output ด้วย Pydantic
+class TicketSummary(BaseModel):
+    category: str = Field(description="ประเภทของปัญหา เช่น intermittent, offline, latency")
+    severity: str = Field(description="ระดับความรุนแรง เช่น high, medium, low")
+    affected_device: str = Field(description="ชื่ออุปกรณ์ที่ได้รับผลกระทบ (ถ้ามี)")
+    affected_site: str = Field(description="ชื่อสาขาหรือไซต์ที่ได้รับผลกระทบ")
+    summary_th: str = Field(description="สรุปปัญหาที่เกิดขึ้นเป็นภาษาไทยสั้นๆ")
+    customer_impact: str = Field(description="ผลกระทบต่อการใช้งานของลูกค้า")
+    confidence: float = Field(description="ความมั่นใจในการสรุปข้อมูล (0.0 ถึง 1.0)")
+
+# 2. สร้าง Class สำหรับนำ Input ไปประมวลผล
+class TicketParser:
+    async def parse(self, text: str) -> TicketSummary:
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "คุณคือผู้เชี่ยวชาญด้าน IT Support จงสกัดข้อมูลจากข้อความแจ้งปัญหาของลูกค้า "
+                    "และสรุปออกมาเป็นโครงสร้าง JSON ตามที่กำหนด"
+                )
+            },
+            {
+                "role": "user",
+                "content": text
+            }
+        ]
+        
+        # ใช้ complete_structured เพื่อบังคับ Output และทำ Auto-correction
+        result = await llm.complete_structured(messages, TicketSummary)
+        return result
+
+# 3. ฟังก์ชันทดสอบรันการทำงาน
+async def main():
+    parser = TicketParser()
+    
+    # จำลองข้อความดิบที่ลูกค้ารายงานมา (ไทยปนอังกฤษ ไม่มีโครงสร้าง)
+    raw_text = "ลูกค้าสาขา NBI โทรมาโวยวายว่าเน็ตหลุดเป็นช่วงๆ ตั้งแต่เช้า ใช้งาน video conference ไม่ต่อเนื่องเลย แจ้งให้เช็คเร้าเตอร์ LPE-NBI-11 ด่วนๆ"
+    
+    print("กำลังประมวลผล...")
+    structured_data = await parser.parse(raw_text)
+    
+    # พิมพ์ผลลัพธ์ออกมาดูในรูปแบบ JSON
+    print("\n✅ ผลลัพธ์ที่ได้:")
+    print(structured_data.model_dump_json(indent=2, ensure_ascii=False))
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+```json
+uv run test_parser.py
 ```
 
 ---
