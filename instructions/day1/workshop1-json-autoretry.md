@@ -18,7 +18,7 @@
 
 ต้องแปลงให้เป็นข้อมูลที่ระบบใช้ต่อได้: สร้างไฟล์ `test_parser.py`
 
-```json
+```python
 import asyncio
 import sys
 sys.path.insert(0, 'apps/agent-api')
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-```json
+```python
 uv run test_parser.py
 ```
 
