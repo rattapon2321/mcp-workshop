@@ -219,7 +219,7 @@ if __name__ == "__main__":
 ```
 
 ```python
-uv run ingest_docs.py
+uv run scripts/ingest_docs.py
 ```
 
 ---
