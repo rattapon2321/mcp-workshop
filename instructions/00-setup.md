@@ -152,7 +152,7 @@ uv run chainlit run apps/chainlit-ui/app.py --port 8000 -w
 | `docker compose -f docker/docker-compose.yml --env-file .env --profile demo up -d mcp-demo` | เปิดแอปสำเร็จรูป (โหมดจริง) |
 | `$env:DEMO_MODE="replay"; docker compose -f docker/docker-compose.yml --env-file .env --profile demo up -d mcp-demo` | เปิดแอปสำเร็จรูป (โหมด replay ไม่ต้องมี LLM) |
 
-## 8. ตารางเปรียบเทียบ Make กับ Windows PowerShell ติดตั้งโดย make install
+## 8. ตารางเปรียบเทียบ Make กับ Windows PowerShell สามารถรัน cat Makefile เพื่อขอดูคำสั่งต่าง ๆ ได้ หากต้องการติดตั้ง Make รัน make install
 
 ---
 
