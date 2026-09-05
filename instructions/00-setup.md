@@ -13,13 +13,16 @@ cp .env.example .env
 แก้ค่า LLM ใน `.env` ให้ตรงกับที่ทีมงานแจ้ง:
 
 ```
-LLM_BASE_URL=http://<ที่ทีมงานแจ้ง>/v1
-LLM_API_KEY=<ที่ทีมงานแจ้ง>
-LLM_MODEL=gemma3:27b
+LLM_BASE_URL=https://openrouter.ai/api/v1
+LLM_API_KEY=sk-or-v1-***Your Key***
+LLM_MODEL=openai/gpt-4o-mini
 ```
 
 ```bash
-make up
+docker compose -f docker/docker-compose.yml --env-file .env up -d 
+```
+```bash
+docker compose -f docker/docker-compose.yml --env-file .env up seeder
 ```
 
 คำสั่งนี้จะเปิดทุกบริการ รอจนพร้อม แล้ว seed ข้อมูลให้อัตโนมัติ (ประมาณ 3-5 นาทีครั้งแรก)
@@ -29,7 +32,7 @@ make up
 ## 2. ตรวจสอบ
 
 ```bash
-make verify
+docker compose -f docker/docker-compose.yml --env-file .env run --rm seeder python verify.py 
 ```
 
 ต้องขึ้น `ALL CHECKS PASSED` ตัวอย่างผลลัพธ์:
