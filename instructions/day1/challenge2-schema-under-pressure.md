@@ -85,3 +85,7 @@
 ## สิ่งที่ต้องส่ง
 
 โค้ดที่แก้แล้ว + ตารางสรุป retry + สรุป 1 ย่อหน้าว่าแก้อะไรและทำไม
+
+## เฉลย
+
+uv run solutions/challenges/challenge2_robust_extractor.py
