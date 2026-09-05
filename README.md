@@ -20,6 +20,10 @@ docker compose -f docker/docker-compose.yml --env-file .env up -d ต่อด�
 ```
 
 ```bash
+docker compose -f docker/docker-compose.yml --env-file .env up seeder
+```
+
+```bash
 docker compose -f docker/docker-compose.yml --env-file .env run --rm seeder python verify.py 
 ```
 
