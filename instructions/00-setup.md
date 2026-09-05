@@ -80,7 +80,7 @@ flowchart LR
 ```sql
 SELECT device_id, site_code, role, model FROM devices ORDER BY site_code, role;
 ```
-**pgAdmin** — มี server Password:
+**pgAdmin** — Password:
 
 ```sql
 mpls_dev_password
