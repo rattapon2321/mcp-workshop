@@ -58,7 +58,7 @@ flowchart LR
 | `tiktoken` | ตัวเลขที่ผิด ถ้าเอามาใช้กับ Gemma |
 
 ```bash
-python -c "
+uv run python -c "
 import sys; sys.path.insert(0,'apps/agent-api')
 from agent import tokenizer
 print(tokenizer.compare('อินเทอร์เน็ตที่สาขานนทบุรีหลุดเป็นช่วงๆ ตั้งแต่เมื่อวาน'))
