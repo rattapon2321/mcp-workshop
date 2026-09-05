@@ -27,7 +27,11 @@ SELECT count(*) AS total, count(embedding) AS embedded FROM tickets;
 ## ขั้นที่ 1 · ลบทิ้ง
 
 ```bash
-make lab1-reset
+cmd /c "docker exec -i mpls-postgres psql -U mpls -d mplsdb < scripts/lab/lab1_reset_vector.sql"
+```
+
+```bash
+cmd /c "docker exec -i mpls-neo4j cypher-shell -u neo4j -p neo4j_dev_password < scripts/lab/lab1_reset_vector.cypher"
 ```
 
 คำสั่งนี้ลบ vector ทั้งใน **PostgreSQL และ Neo4j**
