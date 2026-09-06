@@ -53,7 +53,7 @@ flowchart TB
 
 > **19 tools บนโมเดลเดียวยังจัดการได้สบาย** ต้นทุนการประสานงานของ multi-agent จึงยังไม่คุ้ม
 
-`apps/agent-api/agent/orchestrator.py` มีเวอร์ชัน Orchestrator-Workers ให้ **เพื่อเทียบ ไม่ใช่เพื่อใช้**
+`apps/agent-api/agent/orchestrator.py` มีเวอร์ชัน Orchestrator-Workers `uv run apps/agent-api/agent/orchestrator.py` ให้ **เพื่อเทียบ ไม่ใช่เพื่อใช้**
 
 ### เมื่อไหร่ที่ multi-agent เริ่มคุ้ม
 
