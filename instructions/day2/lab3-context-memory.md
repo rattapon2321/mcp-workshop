@@ -69,7 +69,7 @@ GET /sessions/{id}/memory
 ## ทดสอบ
 
 ```bash
-make test -- tests/test_topic_shift.py
+uv run pytest tests/test_topic_shift.py
 ```
 
 ใช้บทสนทนา 10 turn จาก `data/questions/L4-conversation.yaml`
