@@ -142,9 +142,9 @@ sequenceDiagram
 
 | บทบาท | โมเดล | เมื่อไหร่ใช้ |
 |---|---|---|
-| Main brain | `gemma3:27b` | ตอนส่งงานและเดโม |
-| Iteration | `gemma3:4b` | ระหว่างวนแก้โค้ดใน lab (เร็วกว่ามาก) |
-| Embedding | `embeddinggemma:300m` (768 มิติ) | Lab 1 และ RAG |
+| Main brain | `openai/gpt-4o-mini` | ตอนส่งงานและเดโม |
+| Iteration | `openai/gpt-4o-mini` | ระหว่างวนแก้โค้ดใน lab (เร็วกว่ามาก) |
+| Embedding | `openai/text-embedding-3-small` (1536 มิติ) | Lab 1 และ RAG |
 | Rerank | `mxbai-rerank` | Lab วันที่ 3 |
 
 สลับโมเดลเร็วระหว่าง lab: ตั้ง `LLM_MODEL=$LLM_MODEL_FAST` ใน `.env` แล้วรีสตาร์ต `make api`
