@@ -26,6 +26,15 @@ python3 --version   # ต้อง 3.11 ขึ้นไป
 docker --version
 git --version
 ```
+```bash
+uv pip install torch 
+```
+```bash
+uv pip install pytest
+```
+```bash
+uv pip install pytest-asyncio
+```
 
 | เครื่องมือ | หมายเหตุ |
 |---|---|
