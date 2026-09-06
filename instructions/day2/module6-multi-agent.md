@@ -105,7 +105,7 @@ flowchart LR
 
 ### กันด้วย 3 ชั้นพร้อมกัน
 
-โปรเจกต์นี้ทำใน `agent/executor.py` คลาส `LoopGuard`:
+โปรเจกต์นี้ทำใน `apps/agent-api/agent/executor.py` คลาส `LoopGuard`:
 
 ```python
 1. total_steps > MAX_STEPS                    # งบรวม
