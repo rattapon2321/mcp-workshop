@@ -38,7 +38,7 @@
 ### 1. วัดคะแนนตั้งต้น
 
 ```bash
-make test -- tests/test_tool_selection.py
+uv run pytest tests/test_tool_selection.py
 ```
 
 จดคะแนนไว้ (คาดว่าจะได้ประมาณ 4-6 จาก 12)
@@ -55,7 +55,7 @@ make test -- tests/test_tool_selection.py
 ### 3. วัดใหม่
 
 ```bash
-make test -- tests/test_tool_selection.py
+uv run pytest tests/test_tool_selection.py
 ```
 
 ### 4. หาจุดที่ยังพลาด
@@ -78,7 +78,7 @@ make test -- tests/test_tool_selection.py
 
 1. **ทดสอบว่าอันไหนมีผลมากที่สุด** — ลองใส่ทีละส่วน (เฉพาะ "ห้ามใช้เมื่อ" / เฉพาะ "คืนอะไร") แล้วดูว่าคะแนนขยับเท่าไหร่
 2. **ยุบ tool** — ถ้าให้ยุบจาก 4 เหลือ 3 ตัวได้ จะยุบคู่ไหนและออกแบบ argument อย่างไร
-3. **ทดสอบกับโมเดลเล็ก** — `gemma3:4b` ได้คะแนนเท่าไหร่ description ที่ดีช่วยโมเดลเล็กได้มากกว่าหรือน้อยกว่าโมเดลใหญ่
+3. **ทดสอบกับโมเดลเล็ก** — `openai/text-embedding-3-small` ได้คะแนนเท่าไหร่ description ที่ดีช่วยโมเดลเล็กได้มากกว่าหรือน้อยกว่าโมเดลใหญ่
 
 ---
 
