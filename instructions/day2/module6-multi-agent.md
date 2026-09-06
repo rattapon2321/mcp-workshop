@@ -130,6 +130,7 @@ plan = await planner.create_plan(q)
 # แบบ multi-agent
 decision = await orchestrator.route(q)
 ```
+สร้างไฟล์ compare_q21.py
 ```python
 import asyncio
 import time
@@ -165,7 +166,9 @@ async def main():
     
     print(f"✅ แผนที่ได้ ({len(plan.steps)} ขั้นตอน):")
     for i, step in enumerate(plan.steps):
-        print(f"   [{i+1}] {step.tool}: {step.why}")
+        # ดึงคำอธิบายโดยเช็กทั้ง reason และ justification
+        desc = getattr(step, 'reason', getattr(step, 'justification', 'ไม่มีคำอธิบาย'))
+        print(f"   [{i+1}] {step.tool}: {desc}")
     print("-" * 60)
 
 
@@ -190,8 +193,12 @@ async def main():
     print("\n📊 สรุปผลสำหรับกรอกตาราง (Benchmark):")
     print(f"| วัดค่า                 | Planner เดี่ยว | Orchestrator |")
     print(f"|------------------------|----------------|--------------|")
-    print(f"| จำนวนครั้งที่เรียก LLM | {stats_planner.api_calls:<14} | {stats_orch.api_calls:<12} |")
-    print(f"| Token รวม              | {stats_planner.total_tokens:<14} | {stats_orch.total_tokens:<12} |")
+    
+    # ดึงค่า Token ออกมาอย่างปลอดภัย ถ้าไม่มีให้แสดงเป็น N/A
+    planner_tokens = getattr(stats_planner, 'total_tokens', 'N/A')
+    orch_tokens = getattr(stats_orch, 'total_tokens', 'N/A')
+    
+    print(f"| Token รวม              | {planner_tokens:<14} | {orch_tokens:<12} |")
     print(f"| เวลารวม                | {time_planner:<14.2f} | {time_orch:<12.2f} |")
     print(f"| วางแผนถูกไหม?          | {'ดูจาก Step ด้านบน' :<14} | {'ดูจากแผนกด้านบน' :<12} |")
 
