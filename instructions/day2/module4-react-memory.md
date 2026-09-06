@@ -124,7 +124,7 @@ flowchart TB
 | อยู่ที่ไหน | RAM ของกระบวนการ | pgvector |
 | อายุ | จบเซสชันก็หาย | ข้ามเซสชัน |
 | ค้นอย่างไร | เรียงตามเวลา | semantic search |
-| โค้ด | `agent/memory.py` | `agent/memory_longterm.py` |
+| โค้ด | `uv run apps/agent-api/agent/memory.py` | `uv run apps/agent-api/agent/memory_longterm.py` |
 
 > Long-term memory ใช้ **column เดียวกับที่สร้างเองใน Lab 1** — งานวันแรกกลายเป็นฐานของความจำวันที่สอง
 
