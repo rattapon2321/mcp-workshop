@@ -66,7 +66,7 @@ GET /sessions/{id}/memory
 ```
 http://localhost:8080/sessions/default/memory
 ```
-default คือค่า sessions โดยสามารถตั้งให้ ID รัน Unique ID ได้โดยเข้าที่ `apps/chainlit-ui/app.py` แก้ไขบรรทัดที่ 73 `session_id = "default"  # session_id = cl.user_session.get("session_id") or "default"` หากต้องการรัน ID
+default คือค่า sessions โดยสามารถตั้งให้ ID รัน Unique ID ได้โดยเข้าที่ `apps/chainlit-ui/app.py` แก้ไขบรรทัดที่ 73 `session_id = "default"  # session_id = cl.user_session.get("session_id") or "default"` หาก
 
 
 **สำคัญ** — กลไกความจำมองจากภายนอกไม่เห็น ถ้าไม่มี endpoint นี้ก็ debug ไม่ได้และเรียนรู้ไม่ได้
