@@ -71,7 +71,7 @@ flowchart TD
 ขั้นที่ 2 ต้องใช้ผลของขั้นที่ 1 ได้ เช่น `argument_from = {"device_ids": "step.1.tickets.*.device_id"}`
 
 ### 6. Synthesizer
-รวมผลทุกขั้นเป็นคำตอบ **พร้อมอ้างอิงว่าข้อมูลมาจากไหน**
+รวมผลทุกขั้นเป็นคำตอบ **พร้อมอ้างอิงว่าข้อมูลมาจากไหน** เปิด `http://localhost:8025/` รอ
 
 ---
 ### เฉลยอยู่ใน `apps/mcp-server/tools/notifications.py`
