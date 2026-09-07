@@ -65,6 +65,8 @@ verifier ต้องจับได้ทั้ง 3 จุด: เหตุเ
 โปรเจกต์นี้เลือกข้อแรก — ดู event `grounding_checked` ใน `main.py`
 
 ---
+ตัวอย่าง : `uv run apps/agent-api/verifier.py`
+---
 
 ## เกณฑ์ผ่าน
 
