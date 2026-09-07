@@ -14,11 +14,11 @@
 ## รัน
 
 ```bash
-python solutions/day1/lab1_embed.py
+uv run solutions/day1/lab1_embed.py
 ```
 
 ```bash
-python solutions/day1/workshop1_extractor.py
+uv run solutions/day1/workshop1_extractor.py
 ```
 
 ---
