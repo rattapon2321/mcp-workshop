@@ -86,11 +86,11 @@ APE-NBI-03 ซึ่งมี log flapping ตรงกับช่วงเว�
 ## Workshop 2 — `workshop2_agent.py`
 
 ```bash
-python solutions/day2/workshop2_agent.py
+uv run solutions/day2/workshop2_agent.py
 ```
 
 ```bash
-python solutions/day2/workshop2_agent.py "ทำไมมีลูกค้าแจ้งเน็ตหลุดหลายราย"
+uv run solutions/day2/workshop2_agent.py "ทำไมมีลูกค้าแจ้งเน็ตหลุดหลายราย"
 ```
 
 ### ต่างจาก `apps/agent-api/` อย่างไร
