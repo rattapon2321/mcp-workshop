@@ -13,7 +13,7 @@
 ## 1. ดูเวอร์ชันที่ใช้จริง
 
 ```bash
-make protocol-version
+uv run python scripts/print_protocol_version.py
 ```
 
 จดเลข `protocolVersion` ไว้ เอกสารทุกฉบับในคอร์สนี้อ้างอิงเลขที่ได้จากคำสั่งนี้ ไม่ได้ hardcode ไว้
@@ -25,7 +25,7 @@ make protocol-version
 รัน server แบบ HTTP:
 
 ```bash
-make mcp
+uv run python apps/mcp-server/server.py --transport streamable-http --port 9000
 ```
 
 เปิด terminal ใหม่ แล้วยิง `initialize` เอง:
