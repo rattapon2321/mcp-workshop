@@ -55,7 +55,7 @@ Write-Output $payload | uv run python apps/mcp-server/server.py --transport stdi
 เครื่องมือทางการสำหรับดูและทดสอบ MCP server:
 
 ```bash
-npx @modelcontextprotocol/inspector python apps/mcp-server/server.py
+$json = '{"jsonrpc": "2.0", "id": 1, "method": "tools/call", "params": {"name": "get_upstream_devices", "arguments": {"device_ids": ["LPE-NBI-11", "LPE-NBI-12", "LPE-NBI-13"]}}}'; $initialize = '{"jsonrpc": "2.0", "id": 0, "method": "initialize", "params": {"protocolVersion": "2025-06-18", "capabilities": {}, "clientInfo": {"name": "cli", "version": "1.0"}}}'; Write-Output "$initialize`n$json" | uv run python apps/mcp-server/server.py --transport stdio
 ```
 
 เปิดเบราว์เซอร์ตามที่แจ้ง แล้วลอง:
