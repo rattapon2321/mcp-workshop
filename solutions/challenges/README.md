@@ -4,11 +4,11 @@
 
 | โจทย์ | ไฟล์ | คำสั่ง |
 |---|---|---|
-| [1 · Thai Token Audit](../../instructions/day1/challenge1-thai-token-audit.md) | `challenge1_token_audit.py` | `python solutions/challenges/challenge1_token_audit.py` |
-| [2 · Schema Under Pressure](../../instructions/day1/challenge2-schema-under-pressure.md) | `challenge2_robust_extractor.py` | `python solutions/challenges/challenge2_robust_extractor.py` |
+| [1 · Thai Token Audit](../../instructions/day1/challenge1-thai-token-audit.md) | `challenge1_token_audit.py` | `uv run solutions/challenges/challenge1_token_audit.py` |
+| [2 · Schema Under Pressure](../../instructions/day1/challenge2-schema-under-pressure.md) | `challenge2_robust_extractor.py` | `uv run solutions/challenges/challenge2_robust_extractor.py` |
 | [3 · Tool Description Battle](../../instructions/day2/challenge3-tool-description-battle.md) | `challenge3_descriptions.json` | ดูวิธีใช้ด้านล่าง |
-| [4 · Topic Shift Survival](../../instructions/day2/challenge4-topic-shift-survival.md) | `challenge4_topic_shift.py` | `python solutions/challenges/challenge4_topic_shift.py` |
-| 5 · Guardrail Red-team | `tests/test_guardrails.py` | `make test -- tests/test_guardrails.py` |
+| [4 · Topic Shift Survival](../../instructions/day2/challenge4-topic-shift-survival.md) | `challenge4_topic_shift.py` | `uv run solutions/challenges/challenge4_topic_shift.py` |
+| 5 · Guardrail Red-team | `tests/test_guardrails.py` | `uv run pytest tests/test_guardrails.py` |
 | 6 · Cross-Service Diagnosis | `make eval` | ดู `eval/results/latest.json` |
 
 ---
@@ -46,7 +46,7 @@
 
 1. เปิด `challenge3_descriptions.json`
 2. คัดลอกส่วน `descriptions_under_test` ไปแทนที่ใน `data/challenge_fixtures/tool_selection_cases.json`
-3. รัน `make test -- tests/test_tool_selection.py`
+3. รัน `uv run pytest tests/test_tool_selection.py`
 
 คะแนนควรขึ้นจาก ~5/12 เป็น 11-12/12
 
