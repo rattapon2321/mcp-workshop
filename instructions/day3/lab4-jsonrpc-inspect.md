@@ -31,10 +31,7 @@ uv run python apps/mcp-server/server.py --transport streamable-http --port 9000
 เปิด terminal ใหม่ แล้วยิง `initialize` เอง:
 
 ```bash
-curl -s -X POST http://localhost:9000/mcp \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json, text/event-stream' \
-  -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"manual","version":"1.0"}}}'
+Invoke-RestMethod -Uri http://localhost:9000/mcp -Method Post -ContentType "application/json" -Headers @{"Accept"="application/json, text/event-stream"} -Body '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"manual","version":"1.0"}}}'
 ```
 
 ดูรายการ tool:
