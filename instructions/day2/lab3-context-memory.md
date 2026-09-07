@@ -61,7 +61,7 @@ def detect_topic_shift(self, message: str) -> tuple[bool, str]:
 ```
 GET /sessions/{id}/memory
 ```
-### 4. เปิดให้ตรวจสอบได้
+### 5. ตรวจสอบ
 
 ```
 http://localhost:8080/sessions/default/memory
