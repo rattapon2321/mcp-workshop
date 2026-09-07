@@ -37,10 +37,7 @@ Invoke-RestMethod -Uri http://localhost:9000/mcp -Method Post -ContentType "appl
 ดูรายการ tool:
 
 ```bash
-curl -s -X POST http://localhost:9000/mcp \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json, text/event-stream' \
-  -d '{"jsonrpc":"2.0","id":2,"method":"tools/list"}'
+Invoke-RestMethod -Uri http://localhost:9000/mcp -Method Post -ContentType "application/json" -Headers @{"Accept"="application/json, text/event-stream"} -Body '{"jsonrpc":"2.0","id":2,"method":"tools/list"}'
 ```
 
 เรียก tool จริง:
