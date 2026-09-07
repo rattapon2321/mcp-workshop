@@ -74,7 +74,7 @@ flowchart TD
 รวมผลทุกขั้นเป็นคำตอบ **พร้อมอ้างอิงว่าข้อมูลมาจากไหน** เปิด `http://localhost:8025/` รอ
 
 ---
-### เฉลยอยู่ใน `apps/mcp-server/tools/notifications.py` หรือ uv run python solutions/day2/workshop2_agent.py    
+### เฉลยอยู่ใน `apps/mcp-server/tools/notifications.py` หรือ `uv run python solutions/day2/workshop2_agent.py`
 
 คำสั่งสำหรับพิมพ์ในช่องแชต:
 ```
