@@ -98,8 +98,8 @@ flowchart LR
 
 | บทบาท | โมเดล | หมายเหตุ |
 |---|---|---|
-| Main brain | `gemma3:27b` | ใช้ตอนส่งงาน / เดโม |
-| Iteration | `gemma3:4b` | ใช้ระหว่างทำ lab ให้วนแก้เร็ว |
+| Main brain | `openai/gpt-4o-mini` | ใช้ตอนส่งงาน / เดโม |
+| Iteration | `openai/gpt-4o-mini` | ใช้ระหว่างทำ lab ให้วนแก้เร็ว |
 | Embedding | `openai/text-embedding-3-small` | 1536 มิติ — ตรงกับ production |
 | Rerank | `mxbai-rerank` | ลด hallucination |
 
