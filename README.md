@@ -203,6 +203,6 @@ Workshop นี้เป็น **แบบจำลองย่อส่วน�
 | Gemma 3 27B | GPT-OSS 120B |
 | Chainlit | NMS NEX Integration |
 | MailHog | Telegram Alert |
-| `make verify` | Health Check ทั้ง 3 ฐาน |
+| `docker compose -f docker/docker-compose.yml --env-file .env run --rm seeder python verify.py` | Health Check ทั้ง 3 ฐาน |
 
 อ่านรายละเอียดที่ [instructions/reference/production-mapping.md](instructions/reference/production-mapping.md)
