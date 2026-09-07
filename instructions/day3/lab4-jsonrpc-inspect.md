@@ -43,10 +43,9 @@ Invoke-RestMethod -Uri http://localhost:8080/tools -Method Get | ConvertTo-Json 
 เรียก tool จริง:
 
 ```bash
-curl -s -X POST http://localhost:9000/mcp \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json, text/event-stream' \
-  -d '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"list_devices","arguments":{}}}'
+$payload = '{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-06-18", "capabilities": {}, "clientInfo": {"name": "workshop-client", "version": "1.0"}}}'
+
+Write-Output $payload | uv run python apps/mcp-server/server.py --transport stdio
 ```
 
 ---
