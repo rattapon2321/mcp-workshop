@@ -50,29 +50,13 @@ apps/mcp-server/
 
 ## ขั้นที่ 2 · Resource Setup (20 นาที)
 
-### 2.1 เปิด schema ให้ AI อ่าน เพิ่มใน apps/mcp-server/server.py
+### 2.1 เปิด schema ให้ AI อ่าน
 
 ```python
-from mcp.server.fastmcp import FastMCP
-mcp = FastMCP("MySecureServer")
 @mcp.resource("schema://postgres")
 def postgres_schema() -> str:
     """Tables, columns and comments in the ticket database."""
-    
-    # คืนค่าเป็น String ที่มีข้อมูลครบทั้ง 5 อย่างตามที่โจทย์กำหนด
-    return """
-    Table Name: tickets
-    Row Count: 1,500 rows
-
-    Columns:
-    - id (UUID): รหัสอ้างอิงของทิกเก็ต
-    - status (VARCHAR): สถานะปัจจุบันของทิกเก็ต (เช่น open, closed)
-    - mtu (INTEGER): ค่า MTU ของอุปกรณ์ (สำคัญมากต่อการทำ adjacency ของ Router)
-    - severity (VARCHAR): ระดับความรุนแรงของปัญหา
-    """
 ```
-`npx @modelcontextprotocol/inspector uv run python apps/mcp-server/server.py`
-
 
 **ต้องมี**: ชื่อตาราง, column, ชนิดข้อมูล, comment, จำนวนแถว
 
