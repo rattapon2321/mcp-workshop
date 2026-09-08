@@ -176,10 +176,54 @@ if __name__ == "__main__":
 
 โปรเจกต์นี้ใช้ `FastMCP` (อยู่ใน official SDK) เพราะประกาศ tool ด้วย decorator ได้เลย ทำให้เห็น **สิ่งที่สอน** ไม่ใช่ boilerplate
 
+ นำ Code ชุดนี้ไปทับส่วนของ if __name__ == "__main__":
 ```python
 @mcp.tool(annotations={"readOnlyHint": True})
 def search_tickets(status: str | None = None, range: str = "last_30d") -> dict:
-    """คำอธิบายนี้กลายเป็น description ที่โมเดลเห็น"""
+    """
+    ใช้ค้นหาข้อมูล Ticket ปัญหาการใช้งานของระบบ
+    - status: สถานะของทิกเก็ต (เช่น 'open', 'closed') หากไม่ระบุจะค้นหาทั้งหมด
+    - range: ช่วงเวลาที่ต้องการค้นหา (เช่น 'last_30d', 'last_7d')
+    """
+    # ในระบบจริง ตรงนี้จะใช้คำสั่ง SQL วิ่งไปดึงข้อมูลจาก Database 
+    # (ซึ่งจะถูกคุมด้วยสิทธิ์ mcp_reader อีกชั้นนึง)
+    
+    # สำหรับการทดสอบ เราจะคืนค่าจำลอง (Mock Data) กลับไปให้ AI ก่อน
+    return {
+        "status": "success",
+        "search_params": {"status": status, "range": range},
+        "data": [
+            {"id": "TCK-101", "severity": "high", "status": "open", "issue": "Router Down"},
+            {"id": "TCK-102", "severity": "low", "status": "closed", "issue": "VPN Login Failed"}
+        ]
+    }
+# ==========================================
+# 3. จุดสั่งรันเซิร์ฟเวอร์
+# ==========================================
+# ==========================================
+# 3. จุดทดสอบแบบรันจบในตัว (Simulated LLM Requests)
+# ==========================================
+if __name__ == "__main__":
+    print("🚀 เริ่มการทดสอบระบบป้องกัน (Simulated LLM Requests)\n")
+
+    print("📝 [Test 1] AI สั่งอ่าน: 'q1_summary.csv'")
+    print(">> ตอบกลับ AI:", read_report("q1_summary.csv"))
+    print("-" * 50)
+
+    print("🕵️‍♂️ [Test 2] AI สั่งอ่าน: 'secret_budget.xlsx'")
+    print(">> ตอบกลับ AI:", read_report("secret_budget.xlsx"))
+    print("-" * 50)
+
+    print("💀 [Test 3] AI สั่งอ่าน: '../etc/passwd'")
+    print(">> ตอบกลับ AI:", read_report("../etc/passwd"))
+    print("-" * 50)
+
+    # เพิ่ม Test 4 สำหรับทดสอบ Tool ใหม่
+    print("🎫 [Test 4] AI สั่งค้นหาทิกเก็ต: status='open', range='last_7d'")
+    print(">> ตอบกลับ AI:", search_tickets(status="open", range="last_7d"))
+    print("-" * 50)
+
+    print("\n✅ ทดสอบเสร็จสิ้น! ตอนนี้ระบบมี 2 Tools พร้อมให้บริการแล้ว")
 ```
 
 type hint กลายเป็น `inputSchema` และ docstring กลายเป็น `description` โดยอัตโนมัติ
