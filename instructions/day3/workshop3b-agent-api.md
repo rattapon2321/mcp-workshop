@@ -78,12 +78,18 @@ intent_checked → memory_updated → plan_created
 ```
 
 ถ้า API คืนแค่ข้อความสุดท้าย UI จะทำได้แค่แสดง spinner
-ถ้าคืน event ครบ UI จะแสดงกระบวนการคิดทั้งหมดได้
+ถ้าคืน event ครบ UI จะแสดงกระบวนการคิดทั้งหมดได้ apps/agent-api/agent/events.py
 
 ```python
-def sse(event_type, data) -> str:
-    payload = json.dumps({"type": event_type, "data": data}, ensure_ascii=False)
-    return f"event: {event_type}\ndata: {payload}\n\n"    # บรรทัดว่างท้ายจำเป็น
+def sse(event_type: EventType, data: Any) -> str:
+    """Format one Server-Sent Event.
+
+    The blank line at the end is required by the SSE spec; leaving it out
+    produces a stream that appears to hang.
+    """
+    payload = json.dumps({"type": event_type.value, "data": data},
+                         ensure_ascii=False, default=str)
+    return f"event: {event_type.value}\ndata: {payload}\n\n"
 ```
 
 > ลืมบรรทัดว่างสองบรรทัดท้าย = stream ค้าง เป็นบั๊กที่เจอบ่อยที่สุด
