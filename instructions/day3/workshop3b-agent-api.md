@@ -101,7 +101,7 @@ flowchart TD
 - [ ] คำถามนอกขอบเขต: `tool_calls == 0`
 - [ ] `GET /sessions/{id}/memory` แสดง `context_tokens` ที่เปลี่ยนตามจริง
 - [ ] เพิ่ม tool ใน MCP Server แล้ว planner ใช้ได้โดยไม่แก้ agent
-- [ ] `make test -- tests/test_agent_flow.py` ผ่าน
+- [ ] `uv run pytest tests/test_agent_flow.py` ผ่าน
 
 ---
 
