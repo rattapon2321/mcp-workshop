@@ -229,7 +229,112 @@ if __name__ == "__main__":
 type hint กลายเป็น `inputSchema` และ docstring กลายเป็น `description` โดยอัตโนมัติ
 
 ---
+นำ Code ชุดนี้ไปแทน Code ที่ทำมาข้างต้นทั้งหมด เพิ่มระบบกรองข้อมูลความลับ (Redaction) ที่ต้องทำหน้าที่เซ็นเซอร์ข้อมูล (เช่น SNMP community string หรือ Password) ก่อนที่ข้อความจะหลุดออกไปหา LLM
+```
+import datetime
+import json
+from mcp.server.fastmcp import FastMCP
+from tools.reports import get_safe_path
 
+mcp = FastMCP("MySecureServer")
+
+# ==========================================
+# 1. ระบบ Audit Log
+# ==========================================
+class AuditEvent:
+    def __init__(self, tool: str, decision: str, reason: str, detail: str = ""):
+        self.tool = tool
+        self.decision = decision
+        self.reason = reason
+        self.detail = detail
+
+    def emit(self):
+        """เขียนข้อมูลลงไฟล์ audit.log"""
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_entry = f"[{now}] {self.decision.upper()} | Tool: {self.tool} | Reason: {self.reason} | Detail: {self.detail}\n"
+        
+        with open("audit.log", "a", encoding="utf-8") as f:
+            f.write(log_entry)
+
+# ==========================================
+# 2. ระบบ Redact (เซ็นเซอร์ข้อมูลลับ)
+# ==========================================
+def redact(data):
+    """เซ็นเซอร์ข้อมูลความลับก่อนส่งให้ LLM"""
+    secrets = [
+        "public_snmp_read", 
+        "superadmin_pass", 
+        "192.168.1.100"
+    ]
+    
+    is_dict = isinstance(data, dict)
+    text_data = json.dumps(data, ensure_ascii=False) if is_dict else str(data)
+        
+    for secret in secrets:
+        text_data = text_data.replace(secret, "████████")
+        
+    return json.loads(text_data) if is_dict else text_data
+
+# ==========================================
+# 3. สร้าง Tools ให้ AI ใช้งาน
+# ==========================================
+@mcp.tool()
+def read_report(filename: str) -> str:
+    """ดึงข้อมูลรายงาน"""
+    try:
+        safe_path = get_safe_path(filename)
+        # จำลองข้อความสมมติว่าอ่านไฟล์ผ่าน และมีข้อมูลลับหลุดมา
+        raw_content = f"✅ อ่านไฟล์ {filename} สำเร็จ ค่าคอนฟิกคือ superadmin_pass"
+        return redact(raw_content)
+
+    except Exception as e:
+        AuditEvent(
+            tool="read_report", 
+            decision="blocked", 
+            reason=type(e).__name__,
+            detail=str(e)
+        ).emit()
+        return "❌ คำขอถูกปฏิเสธ: ไม่สามารถเข้าถึงไฟล์ที่ระบุได้"
+
+@mcp.tool(annotations={"readOnlyHint": True})
+def search_tickets(status: str | None = None, range: str = "last_30d") -> dict:
+    """ค้นหาข้อมูล Ticket ปัญหาการใช้งานของระบบ"""
+    raw_data = {
+        "status": "success",
+        "data": [
+            {"id": "TCK-101", "issue": "Router Down", "config_snippet": "snmp-server community public_snmp_read RO"},
+            {"id": "TCK-102", "issue": "DB Login Failed", "error_log": "Failed password for superadmin_pass from 192.168.1.100"}
+        ]
+    }
+    # ส่งข้อมูลผ่านตะแกรงเซ็นเซอร์ก่อนส่งคืน AI
+    return redact(raw_data)
+
+# ==========================================
+# 4. จุดทดสอบแบบรันจบในตัว (Simulated LLM Requests)
+# ==========================================
+if __name__ == "__main__":
+    print("🚀 เริ่มการทดสอบระบบป้องกันและเซ็นเซอร์ข้อมูล\n")
+
+    print("📝 [Test 1] AI สั่งอ่าน: 'q1_summary.csv'")
+    print(">> ตอบกลับ AI:", read_report("q1_summary.csv"))
+    print("-" * 50)
+
+    print("🕵️‍♂️ [Test 2] AI สั่งอ่าน: 'secret_budget.xlsx'")
+    print(">> ตอบกลับ AI:", read_report("secret_budget.xlsx"))
+    print("-" * 50)
+
+    print("💀 [Test 3] AI สั่งอ่าน: '../etc/passwd'")
+    print(">> ตอบกลับ AI:", read_report("../etc/passwd"))
+    print("-" * 50)
+
+    print("🎫 [Test 4] AI สั่งค้นหาทิกเก็ต: status='open', range='last_7d'")
+    # ใช้ json.dumps เพื่อให้พิมพ์ Dictionary ออกมาอ่านง่ายขึ้น
+    print(">> ตอบกลับ AI:", json.dumps(search_tickets(status="open", range="last_7d"), indent=2))
+    print("-" * 50)
+
+    print("\n✅ ทดสอบเสร็จสิ้น! เช็คผลการเซ็นเซอร์ (████████) ใน Test 4 ได้เลย")
+```
+---
 ## 5. OAuth 2.1 — รู้ไว้ แต่ยังไม่ใช้
 
 spec รุ่นใหม่กำหนดให้ MCP server ที่เปิดบนเครือข่ายทำตัวเป็น OAuth Resource Server
