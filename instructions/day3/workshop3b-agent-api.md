@@ -35,7 +35,14 @@ result = await mcp_client.call_tool("search_tickets", {"site_code": "NBI"})
 ### รายการ tool ต้องมาจาก MCP ไม่ใช่ hardcode
 
 ```python
-tools = await mcp_client.list_tools()   # planner ใช้รายการนี้สร้าง plan
+async def create_plan(
+    question: str,
+    context: list[dict] | None = None,
+    stats: llm.LLMStats | None = None,
+    model: str | None = None,
+) -> Plan:
+    client = mcp_client.get()
+    tools = await client.list_tools()
 ```
 
 เพิ่ม tool ใน MCP Server → planner รู้จักทันที ไม่ต้องแก้ agent
