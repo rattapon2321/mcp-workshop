@@ -157,7 +157,7 @@ def generate_report(title: str, format: str = "markdown", range: str = "last_7d"
 - [ ] `files://read/../../.env` ถูกปฏิเสธและมี audit log
 - [ ] `run_report_script` ปฏิเสธชื่อที่ไม่อยู่ใน allowlist
 - [ ] ทดสอบผ่าน MCP Inspector ได้ทุก tool
-- [ ] `make test -- tests/test_mcp_tools.py` ผ่าน
+- [ ] `uv run pytest tests/test_mcp_tools.py` ผ่าน
 
 ---
 
