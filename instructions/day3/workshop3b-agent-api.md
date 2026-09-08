@@ -72,7 +72,11 @@ intent_checked → memory_updated → plan_created
 ```
 
 ถ้า API คืนแค่ข้อความสุดท้าย UI จะทำได้แค่แสดง spinner
-ถ้าคืน event ครบ UI จะแสดงกระบวนการคิดทั้งหมดได้
+ถ้าคืน event ครบ UI จะแสดงกระบวนการคิดทั้งหมดได้ รันตามนี้เพื่อทดสอบ
+
+`uv run apps/agent-api/main.py `
+`uv run uvicorn apps.agent-api.main:app --reload --port 8080`
+`uv run pytest tests/test_agent_flow.py -v`
 
 ```python
 def sse(event_type, data) -> str:
