@@ -80,8 +80,79 @@ flowchart LR
 
 ทุกครั้งที่ปฏิเสธหรือตัดผลลัพธ์ ต้องบันทึก
 
+คัดลอกทับบรรทัดสุดท้ายแทนโค้ดชุดนี้ 
+```
+if __name__ == "__main__":
+    import os
+
+    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("AGENT_API_PORT", "8080")))
+```
 ```python
-AuditEvent(tool=..., decision="blocked", reason=..., detail=...).emit()
+import datetime
+from mcp.server.fastmcp import FastMCP
+from tools.reports import get_safe_path
+
+mcp = FastMCP("MySimpleServer")
+
+# 1. สร้าง Class แบบง่าย เพื่อให้ใช้ syntax .emit() ได้
+class AuditEvent:
+    def __init__(self, tool: str, decision: str, reason: str, detail: str = ""):
+        self.tool = tool
+        self.decision = decision
+        self.reason = reason
+        self.detail = detail
+
+    def emit(self):
+        """เขียนข้อมูลลงไฟล์ audit.log"""
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_entry = f"[{now}] {self.decision.upper()} | Tool: {self.tool} | Reason: {self.reason} | Detail: {self.detail}\n"
+        
+        with open("audit.log", "a", encoding="utf-8") as f:
+            f.write(log_entry)
+
+# 2. นำไปใช้งานดัก Error แบบรวมศูนย์
+@mcp.tool()
+def read_report(filename: str) -> str:
+    """ดึงข้อมูลรายงาน"""
+    try:
+        # ลองตรวจ Path
+        safe_path = get_safe_path(filename)
+        return f"✅ อ่านไฟล์ {filename} สำเร็จ"
+
+    except Exception as e:
+        # ดักทุก Error แล้วใช้ Syntax ที่คุณต้องการ
+        AuditEvent(
+            tool="read_report", 
+            decision="blocked", 
+            reason=type(e).__name__, # ดึงชื่อ Error มาเป็น Reason อัตโนมัติ (เช่น ValueError)
+            detail=str(e)
+        ).emit()
+        
+        # ตอบกลับ LLM ด้วยประโยคเดียวสั้นๆ
+        return "❌ คำขอถูกปฏิเสธ: ไม่สามารถเข้าถึงไฟล์ที่ระบุได้"
+
+# ==========================================
+# 3. จุดสั่งรันเซิร์ฟเวอร์
+# ==========================================
+if __name__ == "__main__":
+    print("🚀 เริ่มการทดสอบระบบป้องกัน (Simulated LLM Requests)\n")
+
+    # สถานการณ์ที่ 1: AI ขออ่านไฟล์ปกติที่อนุญาต
+    print("📝 [Test 1] AI สั่งอ่าน: 'q1_summary.csv'")
+    print(">> ตอบกลับ AI:", read_report("q1_summary.csv"))
+    print("-" * 50)
+
+    # สถานการณ์ที่ 2: AI โดน Prompt Injection สั่งให้อ่านไฟล์ลับนอก Allowlist
+    print("🕵️‍♂️ [Test 2] AI สั่งอ่าน: 'secret_budget.xlsx'")
+    print(">> ตอบกลับ AI:", read_report("secret_budget.xlsx"))
+    print("-" * 50)
+
+    # สถานการณ์ที่ 3: AI โดนแฮ็กเกอร์สั่งเจาะระบบด้วย Path Traversal
+    print("💀 [Test 3] AI สั่งอ่าน: '../etc/passwd'")
+    print(">> ตอบกลับ AI:", read_report("../etc/passwd"))
+    print("-" * 50)
+
+    print("\n✅ ทดสอบเสร็จสิ้น! ตอนนี้ลองเปิดดูไฟล์ 'audit.log' ในโฟลเดอร์ดูครับ")
 ```
 
 **และข้อความปฏิเสธที่ส่งกลับต้องไม่เผยโครงสร้างภายใน** — บอกว่าถูกปฏิเสธเพราะอะไรในระดับที่ผู้ใช้เข้าใจ แต่ไม่บอกชื่อตาราง ชื่อ role หรือ path
