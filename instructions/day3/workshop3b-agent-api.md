@@ -32,7 +32,7 @@ result = await mcp_client.call_tool("search_tickets", {"site_code": "NBI"})
 
 **สิ่งที่ได้มาฟรีจากการเปลี่ยน**: tool ชุดเดียวกันนี้ใช้ได้กับ Claude Desktop ทันทีโดยไม่ต้องเขียนอะไรเพิ่ม
 
-### รายการ tool ต้องมาจาก MCP ไม่ใช่ hardcode
+### รายการ tool ต้องมาจาก MCP ไม่ใช่ hardcode apps/agent-api/agent/planner.py
 
 ```python
 async def create_plan(
