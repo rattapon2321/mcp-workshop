@@ -20,7 +20,7 @@ flowchart LR
 
 ## 1. เปลี่ยนจากเรียกฟังก์ชันตรง เป็นเรียกผ่าน MCP
 
-เมื่อวาน agent เรียกฟังก์ชัน Python ตรงๆ วันนี้ต้องเรียกผ่าน MCP
+เมื่อวาน agent เรียกฟังก์ชัน Python ตรงๆ วันนี้ต้องเรียกผ่าน MCP apps/agent-api/agent/executor.py
 
 ```python
 # เดิม
