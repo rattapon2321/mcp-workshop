@@ -230,7 +230,7 @@ type hint กลายเป็น `inputSchema` และ docstring กลา�
 
 ---
 นำ Code ชุดนี้ไปแทน Code ที่ทำมาข้างต้นทั้งหมด เพิ่มระบบกรองข้อมูลความลับ (Redaction) ที่ต้องทำหน้าที่เซ็นเซอร์ข้อมูล (เช่น SNMP community string หรือ Password) ก่อนที่ข้อความจะหลุดออกไปหา LLM
-```
+```python
 import datetime
 import json
 from mcp.server.fastmcp import FastMCP
