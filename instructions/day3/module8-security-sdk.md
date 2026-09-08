@@ -54,7 +54,7 @@ UPDATE tickets SET severity = 'low';
 
 | ความเสี่ยง | วิธีคุม |
 |---|---|
-| รันสคริปต์ตามใจ | **Allowlist เท่านั้น** — `ALLOWED_SCRIPTS` ใน `tools/reports.py` |
+| รันสคริปต์ตามใจ | **Allowlist เท่านั้น** — `ALLOWED_SCRIPTS` ใน `apps/agent-api/tools/reports.py` |
 | ประกอบ command line | ใช้ `subprocess.run(argv, shell=False)` ห้าม `shell=True` |
 | สคริปต์ค้าง | `timeout=30` |
 | output ท่วม | `MAX_OUTPUT_CHARS` |
