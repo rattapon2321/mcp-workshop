@@ -25,7 +25,7 @@ flowchart TB
 ## ขั้นที่ 1 · รัน server ที่มีอยู่ก่อน (5 นาที)
 
 ```bash
-make mcp
+uv run python apps/mcp-server/server.py --transport streamable-http --port 9000
 ```
 
 ```bash
