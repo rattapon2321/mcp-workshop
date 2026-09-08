@@ -50,7 +50,7 @@ apps/mcp-server/
 
 ## ขั้นที่ 2 · Resource Setup (20 นาที)
 
-### 2.1 เปิด schema ให้ AI อ่าน
+### 2.1 เปิด schema ให้ AI อ่าน เพิ่มใน apps/mcp-server/server.py
 
 ```python
 from mcp.server.fastmcp import FastMCP
@@ -71,6 +71,8 @@ def postgres_schema() -> str:
     - severity (VARCHAR): ระดับความรุนแรงของปัญหา
     """
 ```
+`npx @modelcontextprotocol/inspector uv run python apps/mcp-server/server.py`
+
 
 **ต้องมี**: ชื่อตาราง, column, ชนิดข้อมูล, comment, จำนวนแถว
 
