@@ -45,24 +45,39 @@ Elicitation ทำให้พฤติกรรมเดียวกันน�
 
 ## สิ่งที่ต้องทำ
 
-เพิ่ม tool ที่ถามกลับเมื่อข้อมูลไม่พอ:
+เพิ่ม tool ที่ถามกลับเมื่อข้อมูลไม่พอ: apps/mcp-server/server.py
 
 ```python
-@mcp.tool()
-async def inspect_device(ctx: Context, device_id: str | None = None) -> dict:
-    """ตรวจสอบอุปกรณ์ ถ้าไม่ระบุจะถามผู้ใช้ให้เลือก"""
-    if not device_id:
-        devices = [d["device_id"] for d in list_all_devices()]
-        result = await ctx.elicit(
-            message="ต้องการตรวจสอบอุปกรณ์ตัวไหน",
-            schema={"type": "object",
+def register(mcp) -> None:
+
+    # ... (เครื่องมือตัวอื่นๆ ที่มีอยู่เดิม) ...
+
+    @mcp.tool()
+    async def inspect_device(ctx: Context, device_id: str | None = None) -> dict:
+        """ตรวจสอบอุปกรณ์ ถ้าไม่ระบุจะถามผู้ใช้ให้เลือก"""
+        if not device_id:
+            # ดึงรายชื่ออุปกรณ์จาก Neo4j แทน
+            rows = neo4j_query("MATCH (d:Device) RETURN d.device_id AS device_id ORDER BY device_id")
+            devices = [r["device_id"] for r in rows]
+            
+            result = await ctx.elicit(
+                message="ต้องการตรวจสอบอุปกรณ์ตัวไหน",
+                schema={
+                    "type": "object",
                     "properties": {"device_id": {"type": "string", "enum": devices}},
-                    "required": ["device_id"]},
+                    "required": ["device_id"]
+                },
+            )
+            if result.action != "accept":
+                return {"cancelled": True}
+            device_id = result.content["device_id"]
+            
+        # ค้นหารายละเอียดอุปกรณ์
+        detail = neo4j_query(
+            "MATCH (d:Device {device_id: $id}) RETURN d.device_id AS device_id, d.role AS role",
+            id=device_id
         )
-        if result.action != "accept":
-            return {"cancelled": True}
-        device_id = result.content["device_id"]
-    return get_device_detail(device_id)
+        return detail[0] if detail else {"found": False, "device_id": device_id}
 ```
 
 ---
