@@ -56,7 +56,10 @@
 
 ---
 
-## 2. Claude Code
+## 2. Claude Code 
+```bash
+irm https://claude.ai/install.ps1 | iex
+```
 
 ```bash
 claude mcp add nt-network -- uv --directory "$(pwd)" run python apps/mcp-server/server.py --transport stdio
