@@ -76,9 +76,19 @@ claude mcp list
 {
   "mcpServers": {
     "nt-network": {
-      "command": "uv",
-      "args": ["--directory", "${workspaceFolder}", "run", "python",
-               "apps/mcp-server/server.py", "--transport", "stdio"]
+      "command": "C:/Users/ratta/mcp-workshop/.venv/Scripts/python.exe",
+      "args": [
+        "C:/Users/ratta/mcp-workshop/apps/mcp-server/server.py",
+        "--transport",
+        "stdio"
+      ],
+      "env": {
+        "PG_DSN": "postgresql://mcp_reader:mcp_reader_password@localhost:5432/mplsdb",
+        "NEO4J_URI": "bolt://localhost:7687",
+        "NEO4J_USER": "neo4j",
+        "NEO4J_PASSWORD": "neo4j_dev_password",
+        "OPENSEARCH_URL": "http://localhost:9200"
+      }
     }
   }
 }
