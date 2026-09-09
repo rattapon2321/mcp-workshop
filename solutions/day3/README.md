@@ -10,7 +10,7 @@
 | [Workshop 3B: Agent API](../../instructions/day3/workshop3b-agent-api.md) | `apps/agent-api/main.py` |
 | [Workshop 3C: Chainlit](../../instructions/day3/workshop3c-chainlit.md) | `apps/chainlit-ui/` |
 | [โจทย์ที่ 5: Guardrail Red-team](../../instructions/day3/challenge5-guardrail-redteam.md) | `tests/test_guardrails.py` |
-| [โจทย์ที่ 6: Cross-Service](../../instructions/day3/challenge6-cross-service-diagnosis.md) | `make eval` |
+| [โจทย์ที่ 6: Cross-Service](../../instructions/day3/challenge6-cross-service-diagnosis.md) | `uv run python eval/run_eval.py` |
 
 ---
 
