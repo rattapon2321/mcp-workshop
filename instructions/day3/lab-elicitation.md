@@ -45,7 +45,7 @@ Elicitation ทำให้พฤติกรรมเดียวกันน�
 
 ## สิ่งที่ต้องทำ
 
-เพิ่ม tool ที่ถามกลับเมื่อข้อมูลไม่พอ: apps/mcp-server/server.py
+เพิ่ม tool ที่ถามกลับเมื่อข้อมูลไม่พอ: เพิ่มที่ apps/mcp-server/tools/network.py แล้วทดสอบที่ apps/mcp-server/server.py
 
 ```python
 def register(mcp) -> None:
