@@ -83,7 +83,9 @@ claude mcp list
   }
 }
 ```
+เข้าที่ตั้งค่าแล้วพิมพ์ค้นหา `Model Context Protocol` ตรงหัวข้อ Chat > Mcp > Discovery: Enabled คลิกติ๊กถูก ให้อนุญาต (Enable)
 
+✅ Cursor workspace configuration ('.cursor/mcp.json') (cursor-workspace)
 ---
 
 ## 4. ทดสอบด้วยภาษาธรรมชาติ
