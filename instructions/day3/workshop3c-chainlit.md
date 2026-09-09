@@ -56,7 +56,7 @@ await step.__aexit__(None, None, None)
 
 ## 3. แสดงแผนเป็นแผนภาพ
 
-Chainlit เรนเดอร์ Mermaid ได้ ทำให้ dependency ของแผนเห็นได้ทันที
+Chainlit เรนเดอร์ Mermaid ได้ ทำให้ dependency ของแผนเห็นได้ทันที apps/chainlit-ui/elements.py
 
 ```python
 lines = ["```mermaid", "flowchart TD"]
