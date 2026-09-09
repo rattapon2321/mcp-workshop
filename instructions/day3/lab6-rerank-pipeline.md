@@ -62,7 +62,7 @@ flowchart LR
 docker compose -f docker/docker-compose.yml --profile llm up -d infinity
 ```
 
-### 2. ต่อเข้ากับ `search_docs_semantic`
+### 2. ต่อเข้ากับ `search_docs_semantic` apps/agent-api/agent/rerank.py
 
 ```python
 passages = retrieve(query, k=50)          # ดึงกว้าง
