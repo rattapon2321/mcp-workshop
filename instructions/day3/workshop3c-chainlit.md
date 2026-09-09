@@ -24,7 +24,7 @@ flowchart TB
 
 ---
 
-## 1. รับ SSE และแยก event
+## 1. รับ SSE และแยก event apps/chainlit-ui/app.py 
 
 ```python
 async with client.stream("POST", f"{API}/chat", json={...}) as response:
