@@ -20,6 +20,7 @@
 |---|---|
 | macOS | `~/Library/Application Support/Claude/claude_desktop_config.json` |
 | Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
+หากยังไม่มีไฟล์ให้รัน `mkdir $env:APPDATA\Claude` ตามด้วย `notepad $env:APPDATA\Claude\claude_desktop_config.json` เพื่อสร้าง
 
 ```json
 {
