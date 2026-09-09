@@ -13,7 +13,7 @@
 ## คำถามเดียว 3 ที่
 
 ```bash
-make vector-compare
+uv run scripts/compare_vector_stores.py     
 ```
 
 สคริปต์ยิงคำถามเดียวกันไปทั้ง 3 ระบบแล้วเทียบผล
